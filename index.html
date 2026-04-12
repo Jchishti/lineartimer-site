@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear Timer — Focus. Break. Repeat.</title>
+  <meta name="description" content="Customizable interval timer with Pomodoro, presets, scheduling, and break reminders. Available on iOS, Android, and Chrome.">
+  <link rel="icon" href="icon.png">
+  <style>
+    :root { --amber: #ffbe3c; --teal: #50d2be; --bg: #000; --card: rgba(255,255,255,0.04); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; }
+    a { color: var(--amber); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Hero */
+    .hero { text-align: center; padding: 80px 20px 60px; max-width: 640px; margin: 0 auto; }
+    .hero img { width: 120px; height: 120px; border-radius: 28px; margin-bottom: 24px; box-shadow: 0 0 40px rgba(255,190,60,0.2); }
+    .hero h1 { font-size: 42px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; }
+    .hero h1 span { color: var(--amber); }
+    .hero p { font-size: 18px; color: rgba(255,255,255,0.5); max-width: 400px; margin: 0 auto 32px; }
+
+    /* Download buttons */
+    .downloads { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .dl-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 12px; background: rgba(255,255,255,0.08); color: #fff; font-weight: 600; font-size: 14px; transition: background 0.2s; border: 1px solid rgba(255,255,255,0.1); }
+    .dl-btn:hover { background: rgba(255,255,255,0.15); text-decoration: none; }
+    .dl-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* Features */
+    .features { max-width: 800px; margin: 0 auto; padding: 40px 20px 60px; }
+    .features h2 { text-align: center; font-size: 28px; margin-bottom: 40px; font-weight: 800; }
+    .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    .feature { background: var(--card); border-radius: 16px; padding: 24px; border: 1px solid rgba(255,255,255,0.06); }
+    .feature .icon { font-size: 28px; margin-bottom: 12px; }
+    .feature h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .feature p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.5; }
+
+    /* Timer preview */
+    .preview { text-align: center; padding: 40px 20px; }
+    .timer-mock { display: inline-block; background: rgba(255,255,255,0.03); border-radius: 20px; padding: 32px 48px; border: 1px solid rgba(255,255,255,0.06); }
+    .timer-mock .label { font-size: 13px; font-weight: 700; letter-spacing: 4px; color: rgba(255,190,60,0.6); }
+    .timer-mock .time { font-size: 64px; font-weight: 900; color: var(--amber); text-shadow: 0 0 20px rgba(255,190,60,0.4); margin: 4px 0; }
+    .timer-mock .bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 16px; overflow: hidden; }
+    .timer-mock .bar-fill { height: 100%; width: 60%; background: var(--amber); border-radius: 2px; }
+    .timer-mock .strip { display: flex; gap: 3px; margin-top: 8px; }
+    .timer-mock .strip div { flex: 1; height: 4px; border-radius: 2px; }
+
+    /* Footer */
+    footer { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.2); font-size: 13px; border-top: 1px solid rgba(255,255,255,0.06); max-width: 640px; margin: 0 auto; }
+    footer a { color: rgba(255,255,255,0.3); }
+
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .timer-mock .time { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <img src="icon.png" alt="Linear Timer icon">
+    <h1>Linear <span>Timer</span></h1>
+    <p>Focus. Break. Repeat. A beautifully minimal interval timer for building better routines.</p>
+    <div class="downloads">
+      <a href="#" class="dl-btn">
+        <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/><path d="M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11"/></svg>
+        App Store
+      </a>
+      <a href="#" class="dl-btn">
+        <svg viewBox="0 0 24 24"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302a1 1 0 010 1.38l-2.302 2.302L15.2 12l2.498-2.492zM5.864 1.27L16.8 7.602l-2.301 2.301L5.864 1.27z"/></svg>
+        Google Play
+      </a>
+      <a href="#" class="dl-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 2.999A5.998 5.998 0 0112 6c1.795 0 3.39.786 4.486 2.032l3.74-3.168A11.943 11.943 0 0012 0zM1.006 8.5A11.954 11.954 0 000 12c0 1.236.188 2.427.535 3.55l4.494-2.818A5.96 5.96 0 014.5 12c0-.57.08-1.12.228-1.642L1.006 8.5zm5.036 7.992L2.631 19.5A11.955 11.955 0 0012 24c3.059 0 5.842-1.148 7.96-3.039l-3.643-2.855A5.972 5.972 0 0112 18a5.998 5.998 0 01-5.958-5.508zM18 12c0 .57-.08 1.12-.228 1.642l4.222 1.858A11.954 11.954 0 0024 12c0-1.236-.188-2.427-.535-3.55l-4.494 2.818c.152.522.229 1.072.229 1.732h-6v6c1.795 0 3.39-.786 4.486-2.032L21.369 19.5"/></svg>
+        Chrome Extension
+      </a>
+    </div>
+  </section>
+
+  <section class="preview">
+    <div class="timer-mock">
+      <div class="label">FOCUS</div>
+      <div class="time">12:30</div>
+      <div class="bar"><div class="bar-fill"></div></div>
+      <div class="strip">
+        <div style="background:var(--amber); opacity:0.6"></div>
+        <div style="background:var(--teal); opacity:0.6"></div>
+        <div style="background:var(--amber); opacity:1"></div>
+        <div style="background:var(--teal); opacity:0.25"></div>
+        <div style="background:var(--amber); opacity:0.25"></div>
+        <div style="background:var(--teal); opacity:0.25"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Everything you need to stay on track</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="icon">⏱</div>
+        <h3>Custom Intervals</h3>
+        <p>Build any sequence — work, break, exercise, study — each with its own label, duration, and color.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🍅</div>
+        <h3>Pomodoro Mode</h3>
+        <p>Classic 25/5 technique built in. Configurable work blocks, short breaks, and long breaks.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🎯</div>
+        <h3>Initiating Tasks</h3>
+        <p>Add a "first step" to any interval — the small action that gets you started.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">💾</div>
+        <h3>Save Presets</h3>
+        <p>Save your favorite configurations and load them with one tap.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">📅</div>
+        <h3>Scheduled Timers</h3>
+        <p>Auto-start at specific times on specific days. Perfect for morning routines.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔁</div>
+        <h3>Repeat Modes</h3>
+        <p>Loop your series a set number of times or fill a target duration.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔔</div>
+        <h3>Smart Cues</h3>
+        <p>Transition sounds, halfway alerts, 10-second countdowns, and next-up previews.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🧘</div>
+        <h3>Break Reminders</h3>
+        <p>Gentle nudges when you've been working too long without rest.</p>
+      </div>
+      <div class="feature">
+        <div class="icon">🔒</div>
+        <h3>100% Private</h3>
+        <p>All data stays on your device. No accounts, no tracking, no analytics.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Linear Timer &middot; <a href="privacy.html">Privacy Policy</a> &middot; <a href="mailto:jamal.chishti@gmail.com">Contact</a></p>
+  </footer>
+
+</body>
+</html>
